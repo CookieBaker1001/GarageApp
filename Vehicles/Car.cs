@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GarageApp.Vehicles
+{
+    internal class Car : Vehicle
+    {
+        private string _make;
+        public override string Make { 
+            get { return _make; } 
+            set { _make = value; } 
+        }
+
+        private string _model;
+        public override string Model
+        {
+            get { return _model; }
+            set { _model = value; }
+        }
+
+        private int _year;
+        public override int Year
+        {
+            get { return _year; }
+            set { _year = value; }
+        }
+
+        private string _registrationNumber = string.Empty;
+        public override string RegistrationNumber
+        {
+            get => _registrationNumber;
+            set => _registrationNumber = value;
+        }
+
+        private int _seats;
+        public override int Seats
+        {
+            get => _seats;
+            set => _seats = value;
+        }
+
+        public Car() { }
+
+        public Car(string make, string model, int year, string registrationNumber, int seats = 4)
+        {
+            Make = make;
+            Model = model;
+            Year = year;
+            RegistrationNumber = registrationNumber;
+            Seats = seats;
+        }
+
+        public override void Drive()
+        {
+            Console.WriteLine("The car is driving.");
+        }
+
+        public override void DisplayDetails()
+        {
+            Console.WriteLine($"Bil: {Make}\nModel: {Model} - ({Year})\nRegistreringsnummer: {RegistrationNumber}\n{Seats} säte(n)");
+        }
+    }
+}
