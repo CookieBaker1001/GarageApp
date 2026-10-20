@@ -42,7 +42,7 @@ namespace GarageApp
                         TryToRemoveVehicle(garage);
                         break;
                     case 4:
-                        Search();
+                        TryToSearchVehicle(garage);
                         break;
                     case 5:
                     default:
@@ -52,9 +52,55 @@ namespace GarageApp
             } while (!exit);
         }
 
-        public static void Search()
+        public static void TryToSearchVehicle(Garage garage)
         {
-            Console.WriteLine("Sök fordon - Funktionalitet ej implementerad än.");
+            try
+            {
+                Search(garage);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Fel i operation: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (ArgumentException ex) 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Argumentfel: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Generellt fel: {ex.Message}");
+                Console.ResetColor();
+            }
+        }
+
+        public static void Search(Garage garage)
+        {
+            if (garage.IsEmpty())
+            {
+                throw new InvalidOperationException("Garaget är tomt.");
+            }
+            Console.WriteLine("Ange fordonets registreringsnummer");
+            Console.Write(">");
+
+            string? regNumber = Console.ReadLine();
+            if (string.IsNullOrEmpty(regNumber)) { 
+                throw new ArgumentException("Registreringsnummer får inte vara tomt.");
+            }
+            Vehicle? v = garage.Search(regNumber);
+            if (v is null)
+            {
+                throw new ArgumentException($"Fordon med registreringsnummer {regNumber} hittades inte i garaget.");
+            }
+            Console.WriteLine("Fordon hittat!");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("-------------------");
+            v.DisplayDetails();
+            Console.ResetColor();
         }
 
         public static void TryToRemoveVehicle(Garage garage) {
@@ -75,7 +121,7 @@ namespace GarageApp
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Generelt fel: {ex.Message}");
+                Console.WriteLine($"Generellt fel: {ex.Message}");
                 Console.ResetColor();
             }
         }

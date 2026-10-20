@@ -37,7 +37,7 @@ namespace GarageApp
                 throw new FormatException("Ogiltig fordonstyp.");
             }
 
-            Vehicle v = Utillities.PromptForVehicleDetails(choice);
+            Vehicle v = PromptForVehicleDetails(choice);
             return v;
         }
 

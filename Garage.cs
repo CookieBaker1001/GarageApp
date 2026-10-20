@@ -95,5 +95,22 @@ namespace GarageApp
         {
             return nextPosition >= Capacity;
         }
+
+        public bool IsEmpty()
+        {
+            return nextPosition == 0;
+        }
+
+        public Vehicle? Search(string registrationNumber)
+        {
+            foreach (var vehicle in Vehicles) {
+                if (vehicle is null) continue;
+                string regNum = vehicle.RegistrationNumber.ToLower();
+                if (regNum == registrationNumber.ToLower()) { 
+                    return vehicle;
+                }
+            }
+            return null;
+        }
     }
 }
