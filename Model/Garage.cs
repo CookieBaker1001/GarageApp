@@ -1,10 +1,10 @@
-﻿using GarageApp.Vehicles;
+﻿using GarageApp.Model.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Text;
 
-namespace GarageApp
+namespace GarageApp.Model
 {
     internal class Garage
     {
@@ -36,7 +36,7 @@ namespace GarageApp
             Vehicles[nextPosition] = vehicle;
             nextPosition++;
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Fordon av typ {vehicle.GetType().Name} med " +
+            Console.WriteLine($"Fordon av typ {Translation.Vehicles[vehicle.GetType().Name]} med " +
                 $"registreringsnummer {vehicle.RegistrationNumber} lades till i garaget.");
             Console.ResetColor();
         }
@@ -62,6 +62,7 @@ namespace GarageApp
                     if (showDetails) vehicle.DisplayDetails();
                     else vehicle.DisplayLowDetails();
                 }
+                Console.WriteLine("-------------------");
             }
             Console.ResetColor();
         }
@@ -86,7 +87,7 @@ namespace GarageApp
             nextPosition--;
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine($"{vehicleToRemove.GetType().Name} med registreringsnummer " +
+            Console.WriteLine($"{Translation.Vehicles[vehicleToRemove.GetType().Name]} med registreringsnummer " +
                 $"{vehicleToRemove.RegistrationNumber} har tagits bort från garaget.");
             Console.ResetColor();
         }
@@ -111,6 +112,17 @@ namespace GarageApp
                 }
             }
             return null;
+        }
+
+        public bool DoesThisRegNumberExist(string registrationNumber) {
+            return Search(registrationNumber) is not null;
+        }
+
+        public void Fill(Vehicle[] incommingList) {
+            foreach (var vehicle in incommingList) {
+                Vehicles[nextPosition] = vehicle;
+                nextPosition++;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GarageApp.Vehicles;
+﻿using GarageApp.Model;
+using GarageApp.Model.Vehicles;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization.Metadata;
@@ -9,17 +10,9 @@ namespace GarageApp
     {
         static void Main(string[] args)
         {
+            // ASCII art
             Console.WriteLine(" ######      ###    ########     ###     ######   ######## ######## \r\n##    ##    ## ##   ##     ##   ## ##   ##    ##  ##          ##    \r\n##         ##   ##  ##     ##  ##   ##  ##        ##          ##    \r\n##   #### ##     ## ########  ##     ## ##   #### ######      ##    \r\n##    ##  ######### ##   ##   ######### ##    ##  ##          ##    \r\n##    ##  ##     ## ##    ##  ##     ## ##    ##  ##          ##    \r\n ######   ##     ## ##     ## ##     ##  ######   ########    ##    \n");
-            Console.WriteLine("Välkommen till Garaget!");
-            Console.WriteLine("Hur stort ska garaget vara? (Maxkapacitet)");
-            Console.Write(">");
-            int capacity;
-            while (!int.TryParse(Console.ReadLine(), out capacity) || capacity <= 0)
-            {
-                Console.WriteLine("Ogiltigt värde. Försök igen.");
-                Console.Write(">");
-            }
-            Garage garage = new Garage(capacity);
+            Garage garage = Utillities.StartUp();
 
             bool exit = false;
             int choice;
@@ -52,11 +45,13 @@ namespace GarageApp
             } while (!exit);
         }
 
+        // Försöker söka efter ett fordon som må finnas i garaget
+        // Hanterar eventuella undantag som kan uppstå.
         public static void TryToSearchVehicle(Garage garage)
         {
             try
             {
-                Search(garage);
+                Utillities.Search(garage);
             }
             catch (InvalidOperationException ex)
             {
@@ -78,35 +73,12 @@ namespace GarageApp
             }
         }
 
-        public static void Search(Garage garage)
-        {
-            if (garage.IsEmpty())
-            {
-                throw new InvalidOperationException("Garaget är tomt.");
-            }
-            Console.WriteLine("Ange fordonets registreringsnummer");
-            Console.Write(">");
-
-            string? regNumber = Console.ReadLine();
-            if (string.IsNullOrEmpty(regNumber)) { 
-                throw new ArgumentException("Registreringsnummer får inte vara tomt.");
-            }
-            Vehicle? v = garage.Search(regNumber);
-            if (v is null)
-            {
-                throw new ArgumentException($"Fordon med registreringsnummer {regNumber} hittades inte i garaget.");
-            }
-            Console.WriteLine("Fordon hittat!");
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("-------------------");
-            v.DisplayDetails();
-            Console.ResetColor();
-        }
-
+        // Försöker ta bort ett fordon från garaget
+        // Hanterar eventuella undantag som kan uppstå.
         public static void TryToRemoveVehicle(Garage garage) {
             try
             {
-                RemoveVehicle(garage);
+                Utillities.RemoveVehicle(garage);
             } catch (InvalidOperationException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -126,24 +98,13 @@ namespace GarageApp
             }
         }
 
-        public static void RemoveVehicle(Garage garage)
-        {
-            garage.DisplayWares(false);
-            Console.WriteLine("Ange vilket fordon du vill ta bort");
-            Console.Write(">");
-            int choice;
-            if (!int.TryParse(Console.ReadLine(), out choice)) {
-                Console.WriteLine("Ogiltigt val. Försök igen.");
-                return;
-            }
-            garage.RemoveVehicle(choice - 1);
-        }
-
+        // Försöker se vad som finns i garaget.
+        // Hanterar eventuella undantag som kan uppstå.
         public static void TryToViewGarage(Garage garage)
         {
             try
             {
-                ViewGarage(garage);
+                Utillities.ViewGarage(garage);
             }
             catch (InvalidOperationException ex)
             {
@@ -165,18 +126,13 @@ namespace GarageApp
             }
         }
 
-        public static void ViewGarage(Garage garage)
-        {
-            garage.DisplayWares(true);
-        }
-
-        // Försöker skapa ett fordon och lägga till det i garaget,
-        // hanterar eventuella undantag som kan uppstå.
+        // Försöker skapa ett fordon och lägga till det i garaget.
+        // Hanterar eventuella undantag som kan uppstå.
         public static void TryToAddVehicle(Garage garage) {
             try
             {
                 if (garage.IsFull()) throw new InvalidOperationException("Garaget är fullt. Kan inte lägga till fler fordon.");
-                Vehicle v = Utillities.CreateVehicle();
+                Vehicle v = Utillities.CreateVehicle(garage);
                 if (v != null) { 
                     garage.AddVehicle(v);
                 }
