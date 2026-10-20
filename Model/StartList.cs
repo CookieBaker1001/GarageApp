@@ -12,10 +12,10 @@ namespace GarageApp.Model
             new Car() { Make = "Pfister", Model = "811", Year = 2016, RegistrationNumber = "JEK-736", Seats = 4 },
             new Car() { Make = "Dewbauchee", Model = "Vagner", Year = 2010, RegistrationNumber = "TBA-558", Seats = 2 },
             new Car() { Make = "Benefactor", Model = "Krieger", Year = 2011, RegistrationNumber = "GEW-115", Seats = 5 },
-            new Motorcycle() { Make = "Nagasaki", Model = "Shinobi", Year = 2011, RegistrationNumber = "HEI-499", Seats = 1 },
-            new Motorcycle() { Make = "Pegassi", Model = "Ruffian", Year = 2008, RegistrationNumber = "GEW-115", Seats = 1 },
-            new Motorcycle() { Make = "Maibatsu", Model = "Manchez", Year = 2016, RegistrationNumber = "ASH-371", Seats = 1 },
-            new Motorcycle() { Make = "Shitzu", Model = "Hakucho", Year = 2012, RegistrationNumber = "ASH-371", Seats = 1 },
+            new Motorcycle() { Make = "Nagasaki", Model = "Shinobi", Year = 2011, RegistrationNumber = "HEI-499"},
+            new Motorcycle() { Make = "Pegassi", Model = "Ruffian", Year = 2008, RegistrationNumber = "GEW-115"},
+            new Motorcycle() { Make = "Maibatsu", Model = "Manchez", Year = 2016, RegistrationNumber = "ASH-371"},
+            new Motorcycle() { Make = "Shitzu", Model = "Hakucho", Year = 2012, RegistrationNumber = "ASH-371"},
         };
 
         public static Vehicle[] GetRandomList(int size) {

@@ -51,18 +51,18 @@ namespace GarageApp.Model
                 throw new InvalidOperationException("Garaget är tomt.");
             }
             Console.WriteLine("Fordon i garaget\n(Kapacitet: {0}/{1})", nextPosition, Capacity);
-            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine();
             int index = 1;
             foreach (var vehicle in Vehicles)
             {
                 if (vehicle is not null)
                 {
-                    Console.WriteLine("-------------------");
                     Console.Write((index++) + ". ");
                     if (showDetails) vehicle.DisplayDetails();
                     else vehicle.DisplayLowDetails();
+                    Console.WriteLine();
                 }
-                Console.WriteLine("-------------------");
             }
             Console.ResetColor();
         }
@@ -123,6 +123,13 @@ namespace GarageApp.Model
                 Vehicles[nextPosition] = vehicle;
                 nextPosition++;
             }
+        }
+
+        public Vehicle[] Copy()
+        {
+            Vehicle[] copy = new Vehicle[nextPosition];
+            Array.Copy(Vehicles, copy, nextPosition);
+            return copy;
         }
     }
 }

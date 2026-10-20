@@ -19,7 +19,7 @@ namespace GarageApp
             do
             {
                 Utillities.PrintMainMenu();
-                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 5) {
+                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 6) {
                     Console.WriteLine("Ogiltigt val. Försök igen.");
                     continue;
                 }
@@ -38,11 +38,42 @@ namespace GarageApp
                         TryToSearchVehicle(garage);
                         break;
                     case 5:
+                        TryAdvancedSearch(garage);
+                        break;
+                    case 6:
+                        exit = true;
+                        break;
                     default:
                         exit = true;
                         break;
                 }
             } while (!exit);
+        }
+
+        public static void TryAdvancedSearch(Garage garage)
+        {
+            try
+            {
+                Utillities.AdvancedSearch(garage);
+            }
+            catch (ArgumentOutOfRangeException ex) 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Argument utanför interval fel: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Argument fel: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Generellt fel: {ex.Message}");
+                Console.ResetColor();
+            }
         }
 
         // Försöker söka efter ett fordon som må finnas i garaget
@@ -87,7 +118,7 @@ namespace GarageApp
             } catch (ArgumentOutOfRangeException ex) 
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Indexfel: {ex.Message}");
+                Console.WriteLine($"Argument utanför interval fel: {ex.Message}");
                 Console.ResetColor();
             } 
             catch (Exception ex)
@@ -115,7 +146,7 @@ namespace GarageApp
             catch (IndexOutOfRangeException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Ogiltig index: {ex.Message}");
+                Console.WriteLine($"Index utanför interval fel: {ex.Message}");
                 Console.ResetColor();
             }
             catch (Exception ex)

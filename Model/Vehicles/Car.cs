@@ -34,7 +34,7 @@ namespace GarageApp.Model.Vehicles
         }
 
         private int _seats;
-        public override int Seats
+        public int Seats
         {
             get => _seats;
             set => _seats = value;
@@ -49,11 +49,6 @@ namespace GarageApp.Model.Vehicles
             Year = year;
             RegistrationNumber = registrationNumber;
             Seats = seats;
-        }
-
-        public override void Drive()
-        {
-            Console.WriteLine("The car is driving.");
         }
 
         public override void DisplayDetails()

@@ -34,31 +34,19 @@ namespace GarageApp.Model.Vehicles
             set => _registrationNumber = value;
         }
 
-        private int _seats;
-        public override int Seats { 
-            get => _seats; 
-            set => _seats = value; 
-        }
-
         public Motorcycle() { }
 
-        public Motorcycle(string make, string model, int year, string registrationNumber, int seats = 1)
+        public Motorcycle(string make, string model, int year, string registrationNumber)
         {
             Make = make;
             Model = model;
             Year = year;
             RegistrationNumber = registrationNumber;
-            Seats = seats;
-        }
-
-        public override void Drive()
-        {
-            Console.WriteLine("The bike is driving.");
         }
 
         public override void DisplayDetails()
         {
-            Console.WriteLine($"Motorcykel: {Make}\nModel: {Model} - ({Year})\nRegistreringsnummer: {RegistrationNumber}\n{Seats} säte(n)");
+            Console.WriteLine($"Motorcykel: {Make}\nModel: {Model} - ({Year})\nRegistreringsnummer: {RegistrationNumber}");
         }
 
         public override void DisplayLowDetails()

@@ -13,5 +13,10 @@ namespace GarageApp.Model
             { "Motorcycle", "Motorcykel" },
             { "Motorcycles", "Motorcyklar" }
         };
+
+        public static string[] VehicleNames = new string[] 
+        {
+            "Car", "Motorcycle" 
+        };
     }
 }
