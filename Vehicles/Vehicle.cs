@@ -13,5 +13,6 @@ namespace GarageApp.Vehicles
         public abstract int Seats { get; set; }
         public abstract void Drive();
         public abstract void DisplayDetails();
+        public abstract void DisplayLowDetails();
     }
 }

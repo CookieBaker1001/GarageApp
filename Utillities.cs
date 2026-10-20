@@ -19,7 +19,7 @@ namespace GarageApp
             Console.WriteLine("4. Sök bland fordon");
             Console.WriteLine("5. Avsluta");
             Console.WriteLine("-------------------");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
             Console.Write(">");
         }
 

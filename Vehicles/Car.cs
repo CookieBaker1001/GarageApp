@@ -60,5 +60,10 @@ namespace GarageApp.Vehicles
         {
             Console.WriteLine($"Bil: {Make}\nModel: {Model} - ({Year})\nRegistreringsnummer: {RegistrationNumber}\n{Seats} säte(n)");
         }
+
+        public override void DisplayLowDetails()
+        {
+            Console.WriteLine($"Bil: {Make} Reg: {RegistrationNumber}");
+        }
     }
 }

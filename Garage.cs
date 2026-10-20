@@ -38,24 +38,57 @@ namespace GarageApp
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Fordon av typ {vehicle.GetType().Name} med " +
                 $"registreringsnummer {vehicle.RegistrationNumber} lades till i garaget.");
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ResetColor();
         }
 
-        public void DisplayWares()
+        // Visar alla fordon i garaget, med möjlighet att visa detaljerad information eller
+        // enbart grundläggande information. Detaljerna visas när användaren väljer att
+        // visa detaljerad information i huvudmenyn. Vill användaren ta bort ett fordon
+        // kommer icke-detaljerad information att visas.
+        public void DisplayWares(bool showDetails)
         {
             if (nextPosition == 0) {
-                Console.WriteLine("Garaget är tomt.");
-                return;
+                throw new InvalidOperationException("Garaget är tomt.");
             }
             Console.WriteLine("Fordon i garaget\n(Kapacitet: {0}/{1})", nextPosition, Capacity);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            int index = 1;
             foreach (var vehicle in Vehicles)
             {
                 if (vehicle is not null)
                 {
                     Console.WriteLine("-------------------");
-                    vehicle.DisplayDetails();
+                    Console.Write((index++) + ". ");
+                    if (showDetails) vehicle.DisplayDetails();
+                    else vehicle.DisplayLowDetails();
                 }
             }
+            Console.ResetColor();
+        }
+
+        // Tar bort ett fordon från garaget baserat på indexet i listan.
+        // Skiftar alla fordon efter det borttagna fordonet en position bakåt för att inte
+        // lämna hål i listan.
+        public void RemoveVehicle(int index)
+        {
+            if (index < 0 || index >= nextPosition)
+            {
+                throw new ArgumentOutOfRangeException("Ogiltigt index för att ta bort fordon.");
+            }
+            var vehicleToRemove = Vehicles[index];
+            
+            // Flytta alla fordon efter det borttagna fordonet en position bakåt
+            for (int i = index; i < nextPosition - 1; i++)
+            {
+                Vehicles[i] = Vehicles[i + 1];
+            }
+            Vehicles[nextPosition - 1] = null;
+            nextPosition--;
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($"{vehicleToRemove.GetType().Name} med registreringsnummer " +
+                $"{vehicleToRemove.RegistrationNumber} har tagits bort från garaget.");
+            Console.ResetColor();
         }
 
         public bool IsFull()

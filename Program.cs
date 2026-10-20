@@ -9,8 +9,9 @@ namespace GarageApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(" ######      ###    ########     ###     ######   ######## ######## \r\n##    ##    ## ##   ##     ##   ## ##   ##    ##  ##          ##    \r\n##         ##   ##  ##     ##  ##   ##  ##        ##          ##    \r\n##   #### ##     ## ########  ##     ## ##   #### ######      ##    \r\n##    ##  ######### ##   ##   ######### ##    ##  ##          ##    \r\n##    ##  ##     ## ##    ##  ##     ## ##    ##  ##          ##    \r\n ######   ##     ## ##     ## ##     ##  ######   ########    ##    \n");
             Console.WriteLine("Välkommen till Garaget!");
-            Console.WriteLine("Hur stort är garaget?");
+            Console.WriteLine("Hur stort ska garaget vara? (Maxkapacitet)");
             Console.Write(">");
             int capacity;
             while (!int.TryParse(Console.ReadLine(), out capacity) || capacity <= 0)
@@ -35,10 +36,10 @@ namespace GarageApp
                         TryToAddVehicle(garage);
                         break;
                     case 2:
-                        ViewGarage(garage);
+                        TryToViewGarage(garage);
                         break;
                     case 3:
-                        RemoveVehicle();
+                        TryToRemoveVehicle(garage);
                         break;
                     case 4:
                         Search();
@@ -56,14 +57,71 @@ namespace GarageApp
             Console.WriteLine("Sök fordon - Funktionalitet ej implementerad än.");
         }
 
-        public static void RemoveVehicle()
+        public static void TryToRemoveVehicle(Garage garage) {
+            try
+            {
+                RemoveVehicle(garage);
+            } catch (InvalidOperationException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Fel i operation: {ex.Message}");
+                Console.ResetColor();
+            } catch (ArgumentOutOfRangeException ex) 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Indexfel: {ex.Message}");
+                Console.ResetColor();
+            } 
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Generelt fel: {ex.Message}");
+                Console.ResetColor();
+            }
+        }
+
+        public static void RemoveVehicle(Garage garage)
         {
-            Console.WriteLine("Ta bort fordon - Funktionalitet ej implementerad än.");
+            garage.DisplayWares(false);
+            Console.WriteLine("Ange vilket fordon du vill ta bort");
+            Console.Write(">");
+            int choice;
+            if (!int.TryParse(Console.ReadLine(), out choice)) {
+                Console.WriteLine("Ogiltigt val. Försök igen.");
+                return;
+            }
+            garage.RemoveVehicle(choice - 1);
+        }
+
+        public static void TryToViewGarage(Garage garage)
+        {
+            try
+            {
+                ViewGarage(garage);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Fel i operation: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Ogiltig index: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Generellt fel: {ex.Message}");
+                Console.ResetColor();
+            }
         }
 
         public static void ViewGarage(Garage garage)
         {
-            garage.DisplayWares();
+            garage.DisplayWares(true);
         }
 
         // Försöker skapa ett fordon och lägga till det i garaget,
@@ -81,19 +139,19 @@ namespace GarageApp
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Formateringsfel: {ex.Message}");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
             }
             catch (InvalidOperationException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Fel i operation: {ex.Message}");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Generellt fel: {ex.Message}");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
             }
         }
     }
