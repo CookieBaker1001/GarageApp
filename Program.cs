@@ -19,7 +19,7 @@ namespace GarageApp
             do
             {
                 Utillities.PrintMainMenu();
-                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 6) {
+                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 7) {
                     Console.WriteLine("Ogiltigt val. Försök igen.");
                     continue;
                 }
@@ -32,15 +32,18 @@ namespace GarageApp
                         TryToViewGarage(garage);
                         break;
                     case 3:
-                        TryToRemoveVehicle(garage);
+                        TryListingAllVehicleTypes(garage);
                         break;
                     case 4:
-                        TryToSearchVehicle(garage);
+                        TryToRemoveVehicle(garage);
                         break;
                     case 5:
-                        TryAdvancedSearch(garage);
+                        TryToSearchVehicle(garage);
                         break;
                     case 6:
+                        TryAdvancedSearch(garage);
+                        break;
+                    case 7:
                         exit = true;
                         break;
                     default:
@@ -48,6 +51,20 @@ namespace GarageApp
                         break;
                 }
             } while (!exit);
+        }
+
+        public static void TryListingAllVehicleTypes(Garage garage)
+        {
+            try
+            {
+                Utillities.ListAllVehicleTypes(garage);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Generellt fel: {ex.Message}");
+                Console.ResetColor();
+            }
         }
 
         public static void TryAdvancedSearch(Garage garage)

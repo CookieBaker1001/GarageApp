@@ -48,10 +48,11 @@ namespace GarageApp
             Console.WriteLine("Välj ett alternativ");
             Console.WriteLine("1. Lägg till fordon");
             Console.WriteLine("2. Visa alla fordon");
-            Console.WriteLine("3. Ta bort fordon");
-            Console.WriteLine("4. Sök på registreringsnummer");
-            Console.WriteLine("5. Avancerad sökning");
-            Console.WriteLine("6. Avsluta");
+            Console.WriteLine("3. Lista alla fordonstyper");
+            Console.WriteLine("4. Ta bort fordon");
+            Console.WriteLine("5. Sök på registreringsnummer");
+            Console.WriteLine("6. Avancerad sökning");
+            Console.WriteLine("7. Avsluta");
             Console.WriteLine("-=-------------------------=-");
             Console.ResetColor();
             Console.Write(">");
@@ -122,6 +123,27 @@ namespace GarageApp
             if (choice == 1) return new Car(make, model, year, regNumber, seats);
             else if (choice == 2) return new Motorcycle(make, model, year, regNumber);
             else throw new FormatException("Ogiltigt fordonstyp.");
+        }
+
+        public static void ListAllVehicleTypes(Garage garage) { 
+            StringBuilder sb = new StringBuilder();
+            int[] freq = new int[Vehicle.VehicleTypeCount];
+
+            foreach (var v in garage.Vehicles)
+            {
+                if (v.GetType() == typeof(Car)) freq[0]++;
+                else if (v.GetType() == typeof(Motorcycle)) freq[1]++;
+            }
+            sb.AppendLine("Garaget innehåller följande fordonstyper");
+            for (int i = 0; i < freq.Length; i++) {
+                sb.AppendLine($"{Translation.Vehicles[Translation.VehicleNames[i]]}: {freq[i]}");
+            }
+            
+            sb.AppendLine();
+            sb.AppendLine($"Motorcyklar: {freq[1]}");
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(sb.ToString());
+            Console.ResetColor();
         }
 
         public static void Search(Garage garage)
