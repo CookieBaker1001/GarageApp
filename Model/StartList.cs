@@ -33,11 +33,11 @@ namespace GarageApp.Model
         public static Vehicle[] GetRandomList(int size) {
             if (size > startList.Length) size = startList.Length;
             Vehicle[] list = new Vehicle[size];
-            int[] indeces = new int[size];
-            for (int i = 0; i < size; i++) indeces[i] = i;
+            int[] indeces = new int[20];
+            for (int i = 0; i < 20; i++) indeces[i] = i;
             Random rnd = new Random();
-            for (int i = 0; i < size; i++) {
-                int j = rnd.Next(0, size);
+            for (int i = 0; i < 20; i++) {
+                int j = rnd.Next(0, 20);
 
                 int tmp = indeces[i];
                 indeces[i] = indeces[j];
