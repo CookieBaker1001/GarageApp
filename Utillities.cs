@@ -177,6 +177,7 @@ namespace GarageApp
 
             foreach (var v in garage.Vehicles)
             {
+                if (v is null) break;
                 if (v.GetType() == typeof(Car)) freq[0]++;
                 else if (v.GetType() == typeof(Motorcycle)) freq[1]++;
                 else if (v.GetType() == typeof(Airplane)) freq[2]++;
@@ -191,7 +192,7 @@ namespace GarageApp
             sb.AppendLine($"Båtar: {freq[3]}");
             sb.AppendLine($"Bussar: {freq[4]}");
 
-            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(sb.ToString());
             Console.ResetColor();
         }
