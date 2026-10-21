@@ -58,20 +58,31 @@ namespace GarageApp
 
         public static Vehicle[] FilterType(Vehicle[] vehicles)
         {
-            int choice;
+            int response;
             Console.WriteLine("Välj fordonstyp.");
             Console.WriteLine("1. Bil");
             Console.WriteLine("2. Motorcykel");
+            Console.WriteLine("3. Flygplan");
+            Console.WriteLine("4. Båt");
+            Console.WriteLine("5. Buss");
             Console.Write(">");
-            bool validResult = int.TryParse(Console.ReadLine(), out choice);
+            bool validResult = int.TryParse(Console.ReadLine(), out response);
             if (!validResult)
             {
                 throw new ArgumentException("Formateringsfel.");
             }
-            else if (choice < 1 || choice > Translation.VehicleNames.Length)
+            else if (response < 1 || response > 5)
             {
                 throw new ArgumentOutOfRangeException("Ogiltig fordonstyp.");
             }
+
+            string vehicleType;
+            if (response == 1) vehicleType = "Car";
+            else if (response == 2) vehicleType = "Motorcycle";
+            else if (response == 3) vehicleType = "Airplane";
+            else if (response == 4) vehicleType = "Boat";
+            else if (response == 5) vehicleType = "Bus";
+            else throw new ArgumentOutOfRangeException("Ogiltig fordonstyp.");
 
             Vehicle[] filteredArray = new Vehicle[vehicles.Length];
             int filteredArrayIndex = 0;
@@ -79,7 +90,7 @@ namespace GarageApp
             for (int i = 0; i < vehicles.Length; i++)
             {
                 if (vehicles[i] is null) break;
-                if (vehicles[i].GetType().Name != Translation.VehicleNames[choice - 1])
+                if (vehicles[i].GetType().Name != vehicleType)
                 {
                     removeCounter++;
                     continue;

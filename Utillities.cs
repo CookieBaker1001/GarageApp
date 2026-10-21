@@ -65,9 +65,12 @@ namespace GarageApp
             Console.WriteLine("Vilket fordon vill du lägga till?");
             Console.WriteLine("1. Bil");
             Console.WriteLine("2. Motorcykel");
+            Console.WriteLine("3. Flygplan");
+            Console.WriteLine("4. Båt");
+            Console.WriteLine("5. Buss");
             Console.Write(">");
             int choice;
-            if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 2)
+            if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > Vehicle.VehicleTypeCount)
             {
                 throw new FormatException("Ogiltig fordonstyp.");
             }
@@ -113,15 +116,58 @@ namespace GarageApp
                     Console.Write(">");
                 }
             } while (isValidRegNumber);
-            Console.WriteLine("Antal platser");
-            Console.Write(">");
-            int seats;
-            if (!int.TryParse(Console.ReadLine(), out seats))
-            {
-                throw new FormatException("Antal platser måste vara ett giltigt heltal.");
+
+            // Frågar för specifika parametrar för vissa fordonstyper
+            if (choice == 1 || choice == 5) {
+                Console.WriteLine("Antal platser");
+                Console.Write(">");
+                int seats;
+
+                if (!int.TryParse(Console.ReadLine(), out seats))
+                {
+                    throw new FormatException("Antal platser måste vara ett giltigt heltal.");
+                }
+                if (choice == 1) return new Car(make, model, year, regNumber, seats);
+                else return new Bus(make, model, year, regNumber, seats);
             }
-            if (choice == 1) return new Car(make, model, year, regNumber, seats);
-            else if (choice == 2) return new Motorcycle(make, model, year, regNumber);
+            else if (choice == 2)
+            {
+                return new Motorcycle(make, model, year, regNumber);
+            }
+            else if (choice == 3)
+            {
+                int engineCount;
+                Console.WriteLine("Antal motorer");
+                Console.Write(">");
+                if (!int.TryParse(Console.ReadLine(), out engineCount))
+                {
+                    throw new FormatException("Antal motorer måste vara ett giltigt heltal.");
+                }
+                int maxAltitude;
+                Console.WriteLine("Maximal flyghöjd (meter)");
+                Console.Write(">");
+                if (!int.TryParse(Console.ReadLine(), out maxAltitude))
+                {
+                    throw new FormatException("Den maximala höjden måste vara ett giltigt heltal.");
+                }
+                return new Airplane(make, model, year, regNumber, engineCount, maxAltitude);
+            }
+            else if (choice == 4)
+            {
+                int value;
+                Console.WriteLine("Typ av framdrivning? (1 = Åror, 2 = Segel, 3 = Motor)");
+                Console.Write(">");
+                if (!int.TryParse(Console.ReadLine(), out value))
+                {
+                    throw new FormatException("Framdrivningsvärdet måste vara ett giltigt heltal.");
+                }
+                PropulsionType propulsionType;
+                if (value == 1) propulsionType = PropulsionType.Rowing;
+                else if (value == 2) propulsionType = PropulsionType.Sail;
+                else if (value == 3) propulsionType = PropulsionType.Engine;
+                else throw new FormatException("Ogiltigt framdrivningsvärde.");
+                return new Boat(make, model, year, regNumber, propulsionType);
+            }
             else throw new FormatException("Ogiltigt fordonstyp.");
         }
 
@@ -268,6 +314,8 @@ namespace GarageApp
         public static void ViewGarage(Garage garage)
         {
             garage.DisplayWares(true);
+            Console.Write("Fortsätt? <Enter>");
+            Console.ReadLine();
         }
 
         public static void RemoveVehicle(Garage garage)
@@ -278,8 +326,7 @@ namespace GarageApp
             int choice;
             if (!int.TryParse(Console.ReadLine(), out choice))
             {
-                Console.WriteLine("Ogiltigt val. Försök igen.");
-                return;
+                throw new FormatException("Ogiltigt inmatningsformat.");
             }
             garage.RemoveVehicle(choice - 1);
         }

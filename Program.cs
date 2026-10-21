@@ -10,7 +10,6 @@ namespace GarageApp
     {
         static void Main(string[] args)
         {
-            // ASCII art
             Console.WriteLine(" ######      ###    ########     ###     ######   ######## ######## \r\n##    ##    ## ##   ##     ##   ## ##   ##    ##  ##          ##    \r\n##         ##   ##  ##     ##  ##   ##  ##        ##          ##    \r\n##   #### ##     ## ########  ##     ## ##   #### ######      ##    \r\n##    ##  ######### ##   ##   ######### ##    ##  ##          ##    \r\n##    ##  ##     ## ##    ##  ##     ## ##    ##  ##          ##    \r\n ######   ##     ## ##     ## ##     ##  ######   ########    ##    \n");
             Garage garage = Utillities.StartUp();
 
@@ -19,7 +18,7 @@ namespace GarageApp
             do
             {
                 Utillities.PrintMainMenu();
-                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 7) {
+                if (!int.TryParse(Console.ReadLine(), out choice)) {
                     Console.WriteLine("Ogiltigt val. Försök igen.");
                     continue;
                 }
@@ -127,12 +126,20 @@ namespace GarageApp
             try
             {
                 Utillities.RemoveVehicle(garage);
-            } catch (InvalidOperationException ex)
+            }
+            catch (FormatException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Formateringsfel: {ex.Message}");
+                Console.ResetColor();
+            }
+            catch (InvalidOperationException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Fel i operation: {ex.Message}");
                 Console.ResetColor();
-            } catch (ArgumentOutOfRangeException ex) 
+            } 
+            catch (ArgumentOutOfRangeException ex) 
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Argument utanför interval fel: {ex.Message}");

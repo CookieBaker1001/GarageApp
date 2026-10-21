@@ -35,8 +35,16 @@ namespace GarageApp.Model
             }
             Vehicles[nextPosition] = vehicle;
             nextPosition++;
+            
+            string vehicleType;
+            if (vehicle is Car) vehicleType = "Bil";
+            else if (vehicle is Motorcycle) vehicleType = "Motorcykel";
+            else if (vehicle is Airplane) vehicleType = "Flygplan";
+            else if (vehicle is Boat) vehicleType = "Båt";
+            else vehicleType = "Buss";
+
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Fordon av typ {Translation.Vehicles[vehicle.GetType().Name]} med " +
+            Console.WriteLine($"Ett fordon av typ '{vehicleType}' med " +
                 $"registreringsnummer {vehicle.RegistrationNumber} lades till i garaget.");
             Console.ResetColor();
         }
@@ -50,7 +58,7 @@ namespace GarageApp.Model
             if (nextPosition == 0) {
                 throw new InvalidOperationException("Garaget är tomt.");
             }
-            Console.WriteLine("Fordon i garaget\n(Kapacitet: {0}/{1})", nextPosition, Capacity);
+            Console.WriteLine($"Fordon i garaget\n(Kapacitet: {nextPosition}/{Capacity})");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine();
             int index = 1;
@@ -59,9 +67,13 @@ namespace GarageApp.Model
                 if (vehicle is not null)
                 {
                     Console.Write((index++) + ". ");
-                    if (showDetails) vehicle.DisplayDetails();
+                    if (showDetails)
+                    {
+                        vehicle.DisplayDetails();
+                        Console.WriteLine();
+                    }
                     else vehicle.DisplayLowDetails();
-                    Console.WriteLine();
+                    
                 }
             }
             Console.ResetColor();
@@ -86,8 +98,15 @@ namespace GarageApp.Model
             Vehicles[nextPosition - 1] = null;
             nextPosition--;
 
+            string vehicleType;
+            if (vehicleToRemove is Car) vehicleType = "Bilen";
+            else if (vehicleToRemove is Motorcycle) vehicleType = "Motorcykeln";
+            else if (vehicleToRemove is Airplane) vehicleType = "Flygplanet";
+            else if (vehicleToRemove is Boat) vehicleType = "Båten";
+            else vehicleType = "Bussen";
+
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine($"{Translation.Vehicles[vehicleToRemove.GetType().Name]} med registreringsnummer " +
+            Console.WriteLine($"{vehicleType} med registreringsnummer " +
                 $"{vehicleToRemove.RegistrationNumber} har tagits bort från garaget.");
             Console.ResetColor();
         }
@@ -102,6 +121,7 @@ namespace GarageApp.Model
             return nextPosition == 0;
         }
 
+        // Söker efter ett fordon i garaget baserat på registreringsnummer.
         public Vehicle? Search(string registrationNumber)
         {
             foreach (var vehicle in Vehicles) {
@@ -118,6 +138,8 @@ namespace GarageApp.Model
             return Search(registrationNumber) is not null;
         }
 
+        // Fyller garaget med en lista av fordon. Används för att fylla garaget med
+        // initial-data vid programstart.
         public void Fill(Vehicle[] incommingList) {
             foreach (var vehicle in incommingList) {
                 Vehicles[nextPosition] = vehicle;
@@ -125,6 +147,7 @@ namespace GarageApp.Model
             }
         }
 
+        // Skapar en kopia av garagets fordon i en ny array och returnerar den.
         public Vehicle[] Copy()
         {
             Vehicle[] copy = new Vehicle[nextPosition];

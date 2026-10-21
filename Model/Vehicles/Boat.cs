@@ -49,7 +49,7 @@ namespace GarageApp.Model.Vehicles
 
         public override void DisplayDetails()
         {
-            string details = $"Båt: {Make}\nModell: {Model} - ({Year})\n" +
+            string details = $"(Båt) Märke: {Make}\nModell: {Model} - ({Year})\n" +
                 $"Registreringsnummer: {RegistrationNumber}\nDrivs med ";
             if (PropulsionType == PropulsionType.Engine) details += "motor.";
             else if (PropulsionType == PropulsionType.Sail) details += "segel.";
@@ -59,7 +59,7 @@ namespace GarageApp.Model.Vehicles
 
         public override void DisplayLowDetails()
         {
-            Console.WriteLine($"Båt: {Make} Reg: {RegistrationNumber}");
+            Console.WriteLine($"Båt, Märke: {Make}, Reg: {RegistrationNumber}");
         }
     }
 }

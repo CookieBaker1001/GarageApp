@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GarageApp.Model.Vehicles
 {
-    internal class Buss : Vehicle
+    internal class Bus : Vehicle
     {
         private string _make;
         public override string Make {
@@ -36,9 +36,9 @@ namespace GarageApp.Model.Vehicles
             set => _seats = value;
         }
 
-        public Buss() { }
+        public Bus() { }
 
-        public Buss(string make, string model, int year, string registrationNumber, int seats)
+        public Bus(string make, string model, int year, string registrationNumber, int seats)
         {
             Make = make;
             Model = model;
@@ -49,13 +49,13 @@ namespace GarageApp.Model.Vehicles
 
         public override void DisplayDetails()
         {
-            Console.WriteLine($"Buss: {Make}\nModell: {Model} - ({Year})\n" +
+            Console.WriteLine($"(Buss) Märke: {Make}\nModell: {Model} - ({Year})\n" +
                 $"Registreringsnummer: {RegistrationNumber}\n{Seats} säte(n)");
         }
 
         public override void DisplayLowDetails()
         {
-            Console.WriteLine($"Buss: {Make} Reg: {RegistrationNumber}");
+            Console.WriteLine($"Buss, Märke: {Make}, Reg: {RegistrationNumber}");
         }
     }
 }

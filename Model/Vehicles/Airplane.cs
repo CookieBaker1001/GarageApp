@@ -59,14 +59,14 @@ namespace GarageApp.Model.Vehicles
 
         public override void DisplayDetails()
         {
-            Console.WriteLine($"Flygplan: {Make}\nModell: {Model} - ({Year})\n" +
+            Console.WriteLine($"(Flygplan) Märke: {Make}\nModell: {Model} - ({Year})\n" +
                 $"Registreringsnummer: {RegistrationNumber}\n{EngineCount} motor(er)\n" +
                 $"{MaximumAltitude} meter max höjd");
         }
 
         public override void DisplayLowDetails()
         {
-            Console.WriteLine($"Flygplan: {Make} Reg: {RegistrationNumber}");
+            Console.WriteLine($"Flygplan, Märke: {Make}, Reg: {RegistrationNumber}");
         }
     }
 }

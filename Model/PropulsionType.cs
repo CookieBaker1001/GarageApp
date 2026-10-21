@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GarageApp.Model.Vehicles
+namespace GarageApp.Model
 {
     internal enum PropulsionType
     {
