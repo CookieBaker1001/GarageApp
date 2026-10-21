@@ -133,14 +133,18 @@ namespace GarageApp
             {
                 if (v.GetType() == typeof(Car)) freq[0]++;
                 else if (v.GetType() == typeof(Motorcycle)) freq[1]++;
+                else if (v.GetType() == typeof(Airplane)) freq[2]++;
+                else if (v.GetType() == typeof(Boat)) freq[3]++;
+                else freq[4]++;
             }
+
             sb.AppendLine("Garaget innehåller följande fordonstyper");
-            for (int i = 0; i < freq.Length; i++) {
-                sb.AppendLine($"{Translation.Vehicles[Translation.VehicleNames[i]]}: {freq[i]}");
-            }
-            
-            sb.AppendLine();
+            sb.AppendLine($"Bilar: {freq[0]}");
             sb.AppendLine($"Motorcyklar: {freq[1]}");
+            sb.AppendLine($"Flygplan: {freq[2]}");
+            sb.AppendLine($"Båtar: {freq[3]}");
+            sb.AppendLine($"Bussar: {freq[4]}");
+
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.WriteLine(sb.ToString());
             Console.ResetColor();

@@ -6,7 +6,8 @@ namespace GarageApp.Model.Vehicles
 {
     internal abstract class Vehicle
     {
-        public static int VehicleTypeCount = 2; // Antal olika typer av fordon (Car, Motorcycle)
+        // Antal olika typer av fordon (Car, Motorcycle, Airplane, Boat, Buss)
+        public static int VehicleTypeCount = 5;
         public abstract string Make { get; set; }
         public abstract string Model { get; set; }
         public abstract int Year { get; set; }
