@@ -99,6 +99,11 @@ namespace GarageApp
             {
                 throw new FormatException("Årtalet måste vara ett giltigt heltal.");
             }
+            if (year < 0 || year > DateTime.Now.Year)
+            {
+                throw new ArgumentOutOfRangeException("Ogiltigt årtal.");
+            }
+
             Console.WriteLine("Registreringsnummer");
             Console.Write(">");
             string? regNumber;

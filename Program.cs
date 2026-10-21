@@ -192,6 +192,12 @@ namespace GarageApp
                     garage.AddVehicle(v);
                 }
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Argument utanför interval: {ex.Message}");
+                Console.ResetColor();
+            }
             catch (FormatException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
